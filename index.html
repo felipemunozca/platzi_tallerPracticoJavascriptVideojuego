@@ -4,19 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <title>Juego con JS</title>
 </head>
 <body>
     <!-- Se crea la estructura de la vista del juego -->
     <div class="game-container">
         <canvas id="game"></canvas>
-    </div>
 
-    <div class="buttons-container">
-        <button id="up">Arriba</button>
-        <button id="left">Izquierda</button>
-        <button id="right">Derecha</button>
-        <button id="down">Abajo</button>
+        <div class="buttons-container">
+            <button id="up">Arriba</button>
+            <button id="left">Izquierda</button>
+            <button id="right">Derecha</button>
+            <button id="down">Abajo</button>
+        </div>
+
+        <div class="messages-container">
+            <p>Parrafo de ejemplo</p>
+        </div>
     </div>
+    
+    <!-- Se hace el llamado de los archivos js. Los mapas deben cargarse antes que la logica del juego -->
+    <script src="./assets/js/mapas.js"></script>
+    <script src="./assets/js/main.js"></script>
 </body>
 </html>
