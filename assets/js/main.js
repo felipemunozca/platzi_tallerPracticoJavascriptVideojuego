@@ -40,9 +40,13 @@ function startGame() {
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     console.log(map, mapRows, mapRowCols)
 
-    for (let row = 1; row <= 10; row++) {
-        for (let col = 1; col <= 10; col++) {
-            game.fillText(emojis[mapRowCols[row - 1][col - 1]], elementsSize * col, elementsSize * row);
-        }
-    }
+    //Refactorizacion del codigo de la clase anterior.
+    mapRowCols.forEach((row, rowIndex) => {
+        row.forEach((col, colIndex) => {
+            const simbolo = emojis[col];
+            const posX = elementsSize * (colIndex + 1);
+            const posY = elementsSize * (rowIndex + 1);
+            game.fillText(simbolo, posX, posY);
+        })
+    });
 }
