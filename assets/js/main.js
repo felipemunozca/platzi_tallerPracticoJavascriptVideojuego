@@ -12,6 +12,11 @@ const game = canvas.getContext('2d');
 let canvasSize;
 let elementsSize;
 
+const playerPosition = {
+    x: undefined,
+    y: undefined,
+}
+
 //Se crea un evento utilizando load, para que cargue el juego en cuanto se abra la pantalla.
 window.addEventListener('load', setCanvasSize);
 //Se crea un evento utilizando resize, que escuchara cada vez que se haga un cambio de tamaño en la pantalla.
@@ -43,15 +48,30 @@ function startGame() {
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     // console.log(map, mapRows, mapRowCols)
 
-    //Refactorizacion del codigo de la clase anterior.
+    //Refactorizacion del codigo de dos ciclos for.
     mapRowCols.forEach((row, rowIndex) => {
         row.forEach((col, colIndex) => {
             const simbolo = emojis[col];
             const posX = elementsSize * (colIndex + 1);
             const posY = elementsSize * (rowIndex + 1);
+
+            if (col == 'O') {
+                // console.log({ posX, posY});
+                playerPosition.x = posX;
+                playerPosition.y = posY;
+                // console.log({playerPosition})
+            }
+
             game.fillText(simbolo, posX, posY);
         })
     });
+
+    movePlayer();
+}
+
+//se crea un nueva funcion para hacer que el emoji del jugador se mueva en el tablero.
+function movePlayer() {
+    game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
 }
 
 //se crea un evento para detectar cuando un usuario presione un boton del teclado.
@@ -69,12 +89,13 @@ function moveByKeys(event) {
     else if (event.key == 'ArrowLeft') moveLeft();
     else if (event.key == 'ArrowRight') moveRight();
     else if (event.key == 'ArrowDown') moveDown();
-
 }
 
 //se crean funciones para detectar que tecla o que boton se estan presionando.
 function moveUp() {
     console.log('Me muevo hacia arriba.');
+    playerPosition.y -= elementsSize;
+    movePlayer();
 }
 function moveLeft() {
     console.log('Me muevo hacia la izquierda.');
