@@ -2,7 +2,10 @@ console.log('Comienza el curso...')
 
 /* Se crean las variables que se recibiran desde el archivo index.html. */
 const canvas = document.querySelector("#game");
-
+const btnUp = document.querySelector('#up');
+const btnLeft = document.querySelector('#left');
+const btnRight = document.querySelector('#right');
+const btnDown = document.querySelector('#down');
 
 /* Se crean las variables propias del juego. */
 const game = canvas.getContext('2d');
@@ -38,7 +41,7 @@ function startGame() {
     const map = maps[0];
     const mapRows = map.trim().split("\n");
     const mapRowCols = mapRows.map(row => row.trim().split(''));
-    console.log(map, mapRows, mapRowCols)
+    // console.log(map, mapRows, mapRowCols)
 
     //Refactorizacion del codigo de la clase anterior.
     mapRowCols.forEach((row, rowIndex) => {
@@ -50,3 +53,36 @@ function startGame() {
         })
     });
 }
+
+//se crea un evento para detectar cuando un usuario presione un boton del teclado.
+//se crean eventos para detectar cuando un usuario presione uno de los botones del juego.
+window.addEventListener('keydown', moveByKeys);
+btnUp.addEventListener('click', moveUp);
+btnLeft.addEventListener('click', moveLeft);
+btnRight.addEventListener('click', moveRight);
+btnDown.addEventListener('click', moveDown);
+
+//se crea una funcion para filtrar que tecla se esta presionando.
+function moveByKeys(event) {
+    // console.log(event);
+    if (event.key == 'ArrowUp') moveUp();
+    else if (event.key == 'ArrowLeft') moveLeft();
+    else if (event.key == 'ArrowRight') moveRight();
+    else if (event.key == 'ArrowDown') moveDown();
+
+}
+
+//se crean funciones para detectar que tecla o que boton se estan presionando.
+function moveUp() {
+    console.log('Me muevo hacia arriba.');
+}
+function moveLeft() {
+    console.log('Me muevo hacia la izquierda.');
+}
+function moveRight() {
+    console.log('Me muevo hacia la derecha.')
+}
+function moveDown() {
+    console.log('Me muevo hacia abajo.')
+}
+
