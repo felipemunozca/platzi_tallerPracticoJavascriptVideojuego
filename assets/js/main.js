@@ -17,12 +17,12 @@ const playerPosition = {
     y: undefined,
 }
 
-//Se crea un evento utilizando load, para que cargue el juego en cuanto se abra la pantalla.
+/* Se crea un evento utilizando load, para que cargue el juego en cuanto se abra la pantalla. */
 window.addEventListener('load', setCanvasSize);
-//Se crea un evento utilizando resize, que escuchara cada vez que se haga un cambio de tamaño en la pantalla.
+/* Se crea un evento utilizando resize, que escuchara cada vez que se haga un cambio de tamaño en la pantalla. */
 window.addEventListener('resize', setCanvasSize);
 
-//Se crea una funcion que se ejecutara al iniciar el juego.
+/* Se crea una funcion para determinar el tamaño del tablero de juego. */
 function setCanvasSize() {
     if (window.innerHeight > window.innerWidth) {
         canvasSize = window.innerWidth * 0.75;
@@ -38,7 +38,7 @@ function setCanvasSize() {
     startGame();
 }
 
-//funcion que cargara los emojis en el tablero.
+/* Funcion con la que se iniciara el juego, el orden del mapa y la impresion de los emojis. */
 function startGame() {
     game.font = elementsSize + 'px Verdana';
     game.textAlign = 'end';
@@ -48,7 +48,8 @@ function startGame() {
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     // console.log(map, mapRows, mapRowCols)
 
-    //Refactorizacion del codigo de dos ciclos for.
+    game.clearRect(0 , 0, canvasSize, canvasSize);
+
     mapRowCols.forEach((row, rowIndex) => {
         row.forEach((col, colIndex) => {
             const simbolo = emojis[col];
@@ -56,10 +57,13 @@ function startGame() {
             const posY = elementsSize * (rowIndex + 1);
 
             if (col == 'O') {
-                // console.log({ posX, posY});
-                playerPosition.x = posX;
-                playerPosition.y = posY;
-                // console.log({playerPosition})
+                if (!playerPosition.x && !playerPosition.y) {
+                    // console.log({ posX, posY});
+                    playerPosition.x = posX;
+                    playerPosition.y = posY;
+                    // console.log({playerPosition})
+                }
+                
             }
 
             game.fillText(simbolo, posX, posY);
@@ -69,20 +73,20 @@ function startGame() {
     movePlayer();
 }
 
-//se crea un nueva funcion para hacer que el emoji del jugador se mueva en el tablero.
+/* funcion para hacer que el emoji del jugador se mueva en el tablero. */
 function movePlayer() {
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
 }
 
-//se crea un evento para detectar cuando un usuario presione un boton del teclado.
-//se crean eventos para detectar cuando un usuario presione uno de los botones del juego.
+/* Se escucha un evento para detectar cuando un usuario presione un boton del teclado. */
 window.addEventListener('keydown', moveByKeys);
+/* Se escuchan eventos para detectar cuando un usuario presione uno de los botones del juego. */
 btnUp.addEventListener('click', moveUp);
 btnLeft.addEventListener('click', moveLeft);
 btnRight.addEventListener('click', moveRight);
 btnDown.addEventListener('click', moveDown);
 
-//se crea una funcion para filtrar que tecla se esta presionando.
+/* funcion para comprobar que tecla se esta presionando. */
 function moveByKeys(event) {
     // console.log(event);
     if (event.key == 'ArrowUp') moveUp();
@@ -91,19 +95,25 @@ function moveByKeys(event) {
     else if (event.key == 'ArrowDown') moveDown();
 }
 
-//se crean funciones para detectar que tecla o que boton se estan presionando.
+/* funciones para detectar que tecla o que boton se estan presionando. */
 function moveUp() {
-    console.log('Me muevo hacia arriba.');
+    // console.log('Me muevo hacia arriba.');
     playerPosition.y -= elementsSize;
-    movePlayer();
+    startGame();
 }
 function moveLeft() {
-    console.log('Me muevo hacia la izquierda.');
+    // console.log('Me muevo hacia la izquierda.');
+    playerPosition.x -= elementsSize;
+    startGame();
 }
 function moveRight() {
-    console.log('Me muevo hacia la derecha.')
+    // console.log('Me muevo hacia la derecha.');
+    playerPosition.x += elementsSize;
+    startGame();
 }
 function moveDown() {
-    console.log('Me muevo hacia abajo.')
+    // console.log('Me muevo hacia abajo.')
+    playerPosition.y += elementsSize;
+    startGame();
 }
 
