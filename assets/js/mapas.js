@@ -2,7 +2,8 @@
  * Reglas:
  * El final de cada nivel debe ser el inicio del siguiente
 */
-/* El desafio sera agregar nuevos mapas y probar con nuevos emojis mas adelante. */
+/* El desafió sera agregar nuevos mapas y probar con nuevos emojis mas adelante. */
+/* Para cambiar los emojis, presionar las teclas Windows + . (punto) */
 
 const emojis = {
     '-': ' ',

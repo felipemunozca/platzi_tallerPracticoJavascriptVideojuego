@@ -1,6 +1,6 @@
 console.log('Comienza el curso...')
 
-/* Se crean las variables que se recibiran desde el archivo index.html. */
+/* Se crean las variables que se recibirán desde el archivo index.html. */
 const canvas = document.querySelector("#game");
 const btnUp = document.querySelector('#up');
 const btnLeft = document.querySelector('#left');
@@ -22,7 +22,7 @@ window.addEventListener('load', setCanvasSize);
 /* Se crea un evento utilizando resize, que escuchara cada vez que se haga un cambio de tamaño en la pantalla. */
 window.addEventListener('resize', setCanvasSize);
 
-/* Se crea una funcion para determinar el tamaño del tablero de juego. */
+/* Se crea una función para determinar el tamaño del tablero de juego. */
 function setCanvasSize() {
     if (window.innerHeight > window.innerWidth) {
         canvasSize = window.innerWidth * 0.75;
@@ -38,7 +38,7 @@ function setCanvasSize() {
     startGame();
 }
 
-/* Funcion con la que se iniciara el juego, el orden del mapa y la impresion de los emojis. */
+/* Función con la que se iniciara el juego, el orden del mapa y la impresión de los emojis. */
 function startGame() {
     game.font = elementsSize + 'px Verdana';
     game.textAlign = 'end';
@@ -73,12 +73,12 @@ function startGame() {
     movePlayer();
 }
 
-/* funcion para hacer que el emoji del jugador se mueva en el tablero. */
+/* función para hacer que el emoji del jugador se mueva en el tablero. */
 function movePlayer() {
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
 }
 
-/* Se escucha un evento para detectar cuando un usuario presione un boton del teclado. */
+/* Se escucha un evento para detectar cuando un usuario presione un botón del teclado. */
 window.addEventListener('keydown', moveByKeys);
 /* Se escuchan eventos para detectar cuando un usuario presione uno de los botones del juego. */
 btnUp.addEventListener('click', moveUp);
@@ -86,7 +86,7 @@ btnLeft.addEventListener('click', moveLeft);
 btnRight.addEventListener('click', moveRight);
 btnDown.addEventListener('click', moveDown);
 
-/* funcion para comprobar que tecla se esta presionando. */
+/* función para comprobar que tecla se esta presionando. */
 function moveByKeys(event) {
     // console.log(event);
     if (event.key == 'ArrowUp') moveUp();
@@ -95,25 +95,40 @@ function moveByKeys(event) {
     else if (event.key == 'ArrowDown') moveDown();
 }
 
-/* funciones para detectar que tecla o que boton se estan presionando. */
+/* funciones para detectar que tecla o que botón se están presionando. */
 function moveUp() {
-    // console.log('Me muevo hacia arriba.');
-    playerPosition.y -= elementsSize;
-    startGame();
+    if ((playerPosition.y - elementsSize) < elementsSize) {
+        console.log('OUT');
+        // console.log(playerPosition.y - elementsSize)
+    } else {
+        // console.log(playerPosition.y - elementsSize)
+        playerPosition.y -= elementsSize;
+        startGame();
+    }
+    
 }
 function moveLeft() {
-    // console.log('Me muevo hacia la izquierda.');
-    playerPosition.x -= elementsSize;
-    startGame();
+    if ((playerPosition.x - elementsSize) < elementsSize) {
+        console.log('OUT');
+    } else {
+        playerPosition.x -= elementsSize;
+        startGame();
+    }
 }
 function moveRight() {
-    // console.log('Me muevo hacia la derecha.');
-    playerPosition.x += elementsSize;
-    startGame();
+    if ((playerPosition.x + elementsSize) > canvasSize) {
+        console.log('OUT');
+    } else {
+        playerPosition.x += elementsSize;
+        startGame();
+    }
 }
 function moveDown() {
-    // console.log('Me muevo hacia abajo.')
-    playerPosition.y += elementsSize;
-    startGame();
+    if ((playerPosition.y + elementsSize) > canvasSize) {
+        console.log('OUT');
+    } else {
+        playerPosition.y += elementsSize;
+        startGame();
+    }
 }
 
