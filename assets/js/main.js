@@ -22,6 +22,8 @@ const giftPosition = {
     y: undefined,
 }
 
+let enemiesPosition = [];
+
 /* Se crea un evento utilizando load, para que cargue el juego en cuanto se abra la pantalla. */
 window.addEventListener('load', setCanvasSize);
 /* Se crea un evento utilizando resize, que escuchara cada vez que se haga un cambio de tamaño en la pantalla. */
@@ -43,7 +45,6 @@ function setCanvasSize() {
     startGame();
 }
 
-
 /* Función con la que se iniciara el juego, el orden del mapa y la impresión de los emojis. */
 function startGame() {
     game.font = elementsSize + 'px Verdana';
@@ -54,6 +55,7 @@ function startGame() {
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     // console.log(map, mapRows, mapRowCols)
 
+    enemiesPosition = [];
     game.clearRect(0 , 0, canvasSize, canvasSize);
 
     mapRowCols.forEach((row, rowIndex) => {
@@ -75,6 +77,13 @@ function startGame() {
                 giftPosition.y = posY;
                 // console.log({giftPosition});
             }
+            else if (col == 'X') {
+                enemiesPosition.push({
+                    x: posX,
+                    y: posY,
+                });
+                // console.log(enemiesPosition.length);
+            }
 
             game.fillText(simbolo, posX, posY);
         })
@@ -85,12 +94,21 @@ function startGame() {
 
 /* función para hacer que el emoji del jugador se mueva en el tablero. */
 function movePlayer() {
-    const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
-    const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
+    const giftCollisionX = playerPosition.x.toFixed(2) == giftPosition.x.toFixed(2);
+    const giftCollisionY = playerPosition.y.toFixed(2) == giftPosition.y.toFixed(2);
     const giftCollision = giftCollisionX && giftCollisionY;
 
     if (giftCollision) {
         console.log('Subiste de nivel!')
+    }
+    const enemyCollision = enemiesPosition.find(enemy => {
+        const enemyCollisionX = enemy.x.toFixed(2) == playerPosition.x.toFixed(2);
+        const enemyCollisionY = enemy.y.toFixed(2) == playerPosition.y.toFixed(2);
+        return enemyCollisionX && enemyCollisionY;
+    });
+
+    if (enemyCollision) {
+        console.log('Chocaste contra un enemigo :(')
     }
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
