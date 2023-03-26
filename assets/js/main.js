@@ -17,6 +17,11 @@ const playerPosition = {
     y: undefined,
 }
 
+const giftPosition = {
+    x: undefined,
+    y: undefined,
+}
+
 /* Se crea un evento utilizando load, para que cargue el juego en cuanto se abra la pantalla. */
 window.addEventListener('load', setCanvasSize);
 /* Se crea un evento utilizando resize, que escuchara cada vez que se haga un cambio de tamaño en la pantalla. */
@@ -25,9 +30,9 @@ window.addEventListener('resize', setCanvasSize);
 /* Se crea una función para determinar el tamaño del tablero de juego. */
 function setCanvasSize() {
     if (window.innerHeight > window.innerWidth) {
-        canvasSize = window.innerWidth * 0.75;
+        canvasSize = window.innerWidth * 0.8;
     } else {
-        canvasSize = window.innerHeight * 0.75;
+        canvasSize = window.innerHeight * 0.8;
     }
 
     canvas.setAttribute('width', canvasSize);
@@ -37,6 +42,7 @@ function setCanvasSize() {
 
     startGame();
 }
+
 
 /* Función con la que se iniciara el juego, el orden del mapa y la impresión de los emojis. */
 function startGame() {
@@ -63,7 +69,11 @@ function startGame() {
                     playerPosition.y = posY;
                     // console.log({playerPosition})
                 }
-                
+            }
+            else if (col == "I") {
+                giftPosition.x = posX;
+                giftPosition.y = posY;
+                // console.log({giftPosition});
             }
 
             game.fillText(simbolo, posX, posY);
@@ -75,7 +85,15 @@ function startGame() {
 
 /* función para hacer que el emoji del jugador se mueva en el tablero. */
 function movePlayer() {
-    game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
+    const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
+    const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
+    const giftCollision = giftCollisionX && giftCollisionY;
+
+    if (giftCollision) {
+        console.log('Subiste de nivel!')
+    }
+
+    game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
 }
 
 /* Se escucha un evento para detectar cuando un usuario presione un botón del teclado. */
