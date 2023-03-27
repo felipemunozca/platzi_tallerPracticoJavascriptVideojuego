@@ -12,6 +12,7 @@ const game = canvas.getContext('2d');
 let canvasSize;
 let elementsSize;
 let level = 0;
+let lives = 3;
 
 const playerPosition = {
     x: undefined,
@@ -106,8 +107,6 @@ function movePlayer() {
     const giftCollision = giftCollisionX && giftCollisionY;
 
     if (giftCollision) {
-        // console.log('Subiste de nivel!')
-        //llamo a la función levelWin()
         levelWin();
     }
     const enemyCollision = enemiesPosition.find(enemy => {
@@ -117,7 +116,7 @@ function movePlayer() {
     });
 
     if (enemyCollision) {
-        console.log('Chocaste contra un enemigo :(')
+        gameFail();
     }
 
     game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
@@ -185,4 +184,20 @@ function levelWin() {
 
 function gameWin() {
     console.log('Felicidades, completaste el juego.')
+}
+
+function gameFail() {
+    // console.log('Chocaste contra un enemigo.');
+
+    lives--;
+    // console.log(`me quedan ${lives} vidas.`)
+
+    if (lives <= 0) {
+        level = 0;
+        lives = 3;
+    }
+
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
+    startGame();
 }
