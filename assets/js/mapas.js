@@ -14,6 +14,8 @@ const emojis = {
     'BOMB_COLLISION': '🔥',
     'GAME_OVER': '👎',
     'WIN': '🏆',
+    //debo agregar el emoji de corazón para poder agregarlo en el html.
+    'HEART': '❤️',
 };
 
 const maps = [];

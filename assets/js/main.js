@@ -6,6 +6,8 @@ const btnUp = document.querySelector('#up');
 const btnLeft = document.querySelector('#left');
 const btnRight = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+//creo una nueva variable donde irán los corazones que tiene el jugador.
+const spanLives = document.querySelector('#lives');
 
 /* Se crean las variables propias del juego. */
 const game = canvas.getContext('2d');
@@ -62,6 +64,8 @@ function startGame() {
     const mapRows = map.trim().split("\n");
     const mapRowCols = mapRows.map(row => row.trim().split(''));
     // console.log(map, mapRows, mapRowCols)
+
+    showLives();
 
     enemiesPosition = [];
     game.clearRect(0 , 0, canvasSize, canvasSize);
@@ -200,4 +204,12 @@ function gameFail() {
     playerPosition.x = undefined;
     playerPosition.y = undefined;
     startGame();
+}
+
+function showLives() {
+    const heartsArray = Array(lives).fill(emojis['HEART']);
+    // console.log(heartsArray);
+    
+    spanLives.innerHTML = "";
+    heartsArray.forEach(heart => spanLives.append(heart));
 }
