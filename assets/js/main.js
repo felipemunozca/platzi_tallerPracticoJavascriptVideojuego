@@ -41,15 +41,20 @@ window.addEventListener('resize', setCanvasSize);
 /* Se crea una función para determinar el tamaño del tablero de juego. */
 function setCanvasSize() {
     if (window.innerHeight > window.innerWidth) {
-        canvasSize = window.innerWidth * 0.8;
+        canvasSize = window.innerWidth * 0.7;
     } else {
-        canvasSize = window.innerHeight * 0.8;
+        canvasSize = window.innerHeight * 0.7;
     }
+
+    canvasSize = Number(canvasSize.toFixed(0));
 
     canvas.setAttribute('width', canvasSize);
     canvas.setAttribute('height', canvasSize);
 
     elementsSize = canvasSize / 10;
+
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
 
     startGame();
 }
@@ -156,37 +161,36 @@ function moveByKeys(event) {
 
 /* funciones para detectar que tecla o que botón se están presionando. */
 function moveUp() {
-    if ((playerPosition.y - elementsSize) < elementsSize) {
+    if (fixNumber(playerPosition.y - elementsSize) < elementsSize) {
         console.log('OUT');
         // console.log(playerPosition.y - elementsSize)
     } else {
         // console.log(playerPosition.y - elementsSize)
-        playerPosition.y -= elementsSize;
+        (playerPosition.y -= elementsSize).toFixed(2);
         startGame();
     }
-    
 }
 function moveLeft() {
-    if ((playerPosition.x - elementsSize) < elementsSize) {
+    if (fixNumber(playerPosition.x - elementsSize) < elementsSize) {
         console.log('OUT');
     } else {
-        playerPosition.x -= elementsSize;
+        fixNumber(playerPosition.x -= elementsSize);
         startGame();
     }
 }
 function moveRight() {
-    if ((playerPosition.x + elementsSize) > canvasSize) {
+    if (fixNumber(playerPosition.x + elementsSize) > canvasSize) {
         console.log('OUT');
     } else {
-        playerPosition.x += elementsSize;
+        fixNumber(playerPosition.x += elementsSize);
         startGame();
     }
 }
 function moveDown() {
-    if ((playerPosition.y + elementsSize) > canvasSize) {
+    if (fixNumber(playerPosition.y + elementsSize) > canvasSize) {
         console.log('OUT');
     } else {
-        playerPosition.y += elementsSize;
+        fixNumber(playerPosition.y += elementsSize);
         startGame();
     }
 }
@@ -217,7 +221,7 @@ function gameWin() {
     } else {
         localStorage.setItem('record_time', playerTime);
         result.innerHTML = 'Primera vez? Muy bien, pero ahora trata de superar tu tiempo :)';
-    }   
+    }
 }
 
 function gameFail() {
@@ -240,7 +244,7 @@ function gameFail() {
 function showLives() {
     const heartsArray = Array(lives).fill(emojis['HEART']);
     // console.log(heartsArray);
-    
+
     spanLives.innerHTML = "";
     heartsArray.forEach(heart => spanLives.append(heart));
 }
@@ -251,4 +255,8 @@ function showTime() {
 
 function showRecord() {
     spanRecord.innerHTML = localStorage.getItem('record_time');
+}
+
+function fixNumber(numero) {
+    return Number(numero.toFixed(2));
 }
